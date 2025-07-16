@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Main Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/profile-toggle.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <h2>AI Fitness Coach</h2>
+    <nav>
+      <a href="exercise.html">Exercises</a>
+      <a href="report.html">Report</a>
+      <a href="index.html">Logout</a>
+      <a class="profile-icon" onclick="toggleProfile()">👤</a>
+    </nav>
+  </header>
+
+  <div id="profilePanel" class="profile-sidebar">
+    <h3>Your Profile</h3>
+    <p><strong>Name:</strong> Priya</p>
+    <p><strong>Age:</strong> 20</p>
+    <p><strong>Fitness Level:</strong> Intermediate</p>
+    <p><strong>Goal:</strong> Build Muscle</p>
+  </div>
+
+  <main class="main-content">
+    <section class="card">
+      <h3>Welcome, User!</h3>
+      <p>Track your progress, start a new workout, or explore exercises.</p>
+    </section>
+    <section class="grid">
+      <div class="card"><h4>Total Workouts</h4><p>12</p></div>
+      <div class="card"><h4>Calories Burned</h4><p>850 kcal</p></div>
+      <div class="card"><h4>Minutes Trained</h4><p>120 mins</p></div>
+    </section>
+  </main>
+</body>
+</html>
