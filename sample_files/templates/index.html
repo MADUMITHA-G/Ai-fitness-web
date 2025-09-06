@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Camera → OpenCV (Snapshot Method)</title>
+  <style>
+    video, img { border: 1px solid #ccc; margin: 8px; }
+    #wrapper { display: flex; flex-wrap: wrap; }
+    button { margin-top: 10px; padding: 8px 16px; }
+  </style>
+</head>
+<body>
+  <h2>Live Camera (Left) → Processed Output (Right)</h2>
+  <div id="wrapper">
+    <video id="camera" width="320" height="240" autoplay playsinline></video>
+    <img id="processed" width="320" height="240" alt="Processed image will appear here" />
+  </div>
+  <p>Status: <span id="status">Initializing...</span></p>
+
+  <!-- Hidden canvas for frame capture -->
+  <canvas id="frameCanvas" width="320" height="240" style="display:none;"></canvas>
+
+  <script>
+    const video = document.getElementById('camera');
+    const processedImg = document.getElementById('processed');
+    const canvas = document.getElementById('frameCanvas');
+    const ctx = canvas.getContext('2d');
+    const statusEl = document.getElementById('status');
+
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        statusEl.textContent = 'Camera started. Sending frames...';
+        video.addEventListener('playing', () => {
+          startSendingFrames();
+        }, { once: true });
+      } catch (err) {
+        console.error('Camera error: ', err);
+        statusEl.textContent = 'Camera access denied.';
+      }
+    }
+
+    function startSendingFrames() {
+  const FPS = 10;
+  const interval = 1000 / FPS; // 100 ms
+
+  setInterval(() => {
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // Use toBlob instead of toDataURL for efficiency
+    canvas.toBlob(blob => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        fetch('/process_frame', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: reader.result }) // still sending base64, but smaller blob first
+        })
+        .then(response => response.json())
+        .then(data => {
+          processedImg.src = data.image;
+        })
+        .catch(err => console.error('Error sending frame:', err));
+      };
+      reader.readAsDataURL(blob); // convert blob → base64 here
+    }, 'image/jpeg', 0.6); // quality 0.6 for smaller size
+  }, interval);
+}
+
+
+    startCamera();
+  </script>
+</body>
+</html>
