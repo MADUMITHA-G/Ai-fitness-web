@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Step Workout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background-color: #ffffff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .header a {
+            color: #3498db;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .header a:hover {
+            color: #2980b9;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .workout-container {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .info-panel {
+            flex: 1;
+            padding-right: 2rem;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .info-panel h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+        .info-panel p {
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+        .count-display {
+            background-color: #3498db;
+            color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .count-display h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .count-display .reps {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+        .video-panel {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        #processed-feed {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        #message-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.25rem;
+            z-index: 10;
+            display: none; /* Initially hidden */
+        }
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>High Step Workout</h1>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="workout-container">
+            <div class="info-panel">
+                <h2>High Step Exercise</h2>
+                <p>
+                    Perform high steps by bringing your knees as high as possible. Ensure your hip and knee are aligned to count a successful repetition.
+                </p>
+                <div class="count-display">
+                    <h3>REPS</h3>
+                    <div class="reps" id="reps-count">0</div>
+                </div>
+            </div>
+            <div class="video-panel">
+                <img id="processed-feed" alt="Processed Camera Feed">
+                <div id="message-box"></div>
+                <div id="loader" class="loader" style="display:none;"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const processedFeed = document.getElementById('processed-feed');
+        const repsCount = document.getElementById('reps-count');
+        const messageBox = document.getElementById('message-box');
+        const loader = document.getElementById('loader');
+        let stream = null;
+        let isProcessing = false;
+
+        async function initCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
+                processedFeed.style.display = 'block';
+                startProcessing();
+            } catch (err) {
+                console.error("Error accessing camera:", err);
+                showMessage("Camera access denied. Please enable your camera to continue.");
+            }
+        }
+
+        function showMessage(msg) {
+            messageBox.textContent = msg;
+            messageBox.style.display = 'block';
+        }
+
+        function hideMessage() {
+            messageBox.style.display = 'none';
+        }
+
+        function startProcessing() {
+            const track = stream.getVideoTracks()[0];
+            const imageCapture = new ImageCapture(track);
+            isProcessing = true;
+            
+            async function processFrame() {
+                if (!isProcessing) return;
+
+                try {
+                    const bitmap = await imageCapture.grabFrame();
+                    const canvas = document.createElement('canvas');
+                    canvas.width = bitmap.width;
+                    canvas.height = bitmap.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(bitmap, 0, 0);
+
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                    
+                    const response = await fetch('/process_frame', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ image: dataUrl })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.image) {
+                        processedFeed.src = data.image;
+                    }
+                    if (data.count !== undefined) {
+                        repsCount.textContent = data.count;
+                    }
+
+                } catch (error) {
+                    console.error('Error processing frame:', error);
+                    // Stop processing on a critical error
+                    isProcessing = false;
+                }
+                
+                requestAnimationFrame(processFrame);
+            }
+            
+            requestAnimationFrame(processFrame);
+        }
+
+        window.onload = initCamera;
+
+        window.onbeforeunload = function() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        };
+
+    </script>
+</body>
+</html>

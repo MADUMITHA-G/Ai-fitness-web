@@ -1,0 +1,150 @@
+<!-- templates/placeholder.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Placeholder — Pose Landmarks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background:#f0f4f8; color:#333; min-height:100vh; display:flex; flex-direction:column; }
+    .header{background:#fff;padding:1rem 2rem;box-shadow:0 2px 4px rgba(0,0,0,.05);display:flex;justify-content:space-between;align-items:center;}
+    .header h1{font-size:1.25rem;font-weight:700;}
+    .header a{color:#3498db;font-weight:500;text-decoration:none;}
+    .main-content{flex-grow:1;padding:2rem;display:flex;flex-direction:column;align-items:center;}
+    .workout-container{display:flex;gap:2rem;width:100%;max-width:1200px;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.08);}
+    .info-panel{flex:1;padding-right:2rem;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;justify-content:center;}
+    .info-panel h2{font-size:2rem;font-weight:600;color:#3498db;margin-bottom:1rem;}
+    .info-panel p{font-size:1.05rem;line-height:1.6;}
+    .video-panel{flex:2;display:flex;justify-content:center;align-items:center;background:#000;border-radius:12px;overflow:hidden;position:relative;min-height:360px;}
+    #processed-feed{width:100%;height:auto;border-radius:12px;object-fit:cover;display:block;}
+    #message-box{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:#fff;padding:0.8rem 1.2rem;border-radius:8px;font-size:1rem;display:none;z-index:10;}
+    .loader{border:6px solid #f3f3f3;border-top:6px solid #3498db;border-radius:50%;width:42px;height:42px;animation:spin 1s linear infinite;position:absolute;bottom:16px;right:16px;display:none;}
+    @keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+    /* hide raw video */
+    #video { display:none; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Pose Landmarks — Welcome{{ ' ' + name if name is defined else '' }}</h1>
+    <nav><a href="{{ url_for('dashboard') }}">Dashboard</a></nav>
+  </header>
+
+  <main class="main-content">
+    <div class="workout-container">
+      <div class="info-panel">
+        <h2>Pose Landmarks</h2>
+        <p>
+            Exercise keeps your body active, your mind sharp, and your mood positive.
+            It improves strength, flexibility, and overall health when done regularly.
+            Even a few minutes a day can make a big difference in your energy and well-being.
+        </p>
+      </div>
+
+      <div class="video-panel">
+        <img id="processed-feed" alt="Processed Camera Feed" />
+        <div id="message-box"></div>
+        <div id="loader" class="loader"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- hidden video + canvas used to capture frames -->
+  <video id="video" autoplay playsinline></video>
+  <canvas id="capture-canvas" style="display:none;"></canvas>
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('capture-canvas');
+    const processedFeed = document.getElementById('processed-feed');
+    const messageBox = document.getElementById('message-box');
+    const loader = document.getElementById('loader');
+
+    let stream = null;
+    let isProcessing = false;
+
+    function showMessage(msg) {
+      messageBox.textContent = msg;
+      messageBox.style.display = 'block';
+    }
+    function hideMessage() {
+      messageBox.style.display = 'none';
+    }
+    function showLoader() { loader.style.display = 'block'; }
+    function hideLoader() { loader.style.display = 'none'; }
+
+    async function initCamera() {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
+        video.srcObject = stream;
+        await new Promise(resolve => video.onloadedmetadata = resolve);
+        processedFeed.style.display = 'block';
+        startProcessing();
+      } catch (err) {
+        console.error('Camera access error:', err);
+        showMessage('Camera access denied or unavailable. Please enable camera and reload.');
+      }
+    }
+
+    function startProcessing() {
+      const ctx = canvas.getContext('2d');
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
+      isProcessing = true;
+
+      async function processFrame() {
+        if (!isProcessing) return;
+
+        try {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+
+          showLoader();
+          const res = await fetch('/process_placeholder', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: dataUrl })
+          });
+
+          if (!res.ok) {
+            const err = await res.text();
+            console.error('Server error:', err);
+            hideLoader();
+            showMessage('Server error while processing frame.');
+            isProcessing = false;
+            return;
+          }
+
+          const data = await res.json();
+          hideLoader();
+
+          if (data.image) {
+            processedFeed.src = data.image;
+          }
+
+        } catch (e) {
+          console.error('Frame processing error:', e);
+          hideLoader();
+          showMessage('Error processing frames. Check console.');
+          isProcessing = false;
+          return;
+        }
+
+        requestAnimationFrame(processFrame);
+      }
+
+      requestAnimationFrame(processFrame);
+    }
+
+    window.onload = initCamera;
+
+    window.onbeforeunload = () => {
+      if (stream) {
+        stream.getTracks().forEach(t => t.stop());
+      }
+    };
+  </script>
+</body>
+</html>

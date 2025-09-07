@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f0f4f8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 2rem;
+      max-width: 500px;
+      width: 100%;
+      margin: 2rem auto;
+    }
+    .card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    .info-label {
+      font-weight: 600;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">User Profile</h1>
+    <nav>
+      <a href="{{ url_for('dashboard') }}" class="text-blue-500 hover:text-blue-700 mr-4">Dashboard</a>
+      <a href="{{ url_for('logout') }}" class="text-red-500 hover:text-red-700">Logout</a>
+    </nav>
+  </header>
+
+  <main class="flex-grow flex items-center justify-center">
+    <div class="card">
+      <h2>Hello, {{ name }} 👋</h2>
+      <div class="info-row">
+        <span class="info-label">Age:</span>
+        <span>{{ age }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Gender:</span>
+        <span>{{ gender }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Height:</span>
+        <span>{{ height }} cm</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Weight:</span>
+        <span>{{ weight }} kg</span>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

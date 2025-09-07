@@ -1,0 +1,11 @@
+4) Thread-safety & multi-user note (important)
+
+This curl_counter instance is global. That means if multiple browser clients call /process_curl, they share the same counter/state. For single-user testing on localhost this is fine.
+
+If you need per-user counters, we can:
+
+store processor instances in a dict keyed by session['email'] or a generated session id, or
+
+send/receive state on client side and make processors stateless.
+
+Tell me if you want per-user isolation; I’ll provide a safe session-factory version.
