@@ -9,7 +9,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
+            background: url('/static/fitness.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: #333;
             min-height: 100vh;
             display: flex;
@@ -115,7 +116,7 @@
             </a>
 
             <a href="{{ url_for('workout_curl') }}" class="card">
-                <img src="https://placehold.co/600x400/8e44ad/ecf0f1?text=Curls" alt="Curls">
+                <img src="https://placehold.co/600x600/8e44ad/ecf0f1?text=Curls" alt="Curls">
                 <h3>Biceps Curls</h3>
             </a>
 
@@ -125,7 +126,7 @@
             </a>
 
             <a href="{{ url_for('workout_placeholder') }}" class="card">
-                <img src="https://placehold.co/600x400/34495e/ecf0f1?text=Plank" alt="Placeholder">
+                <img src="{{ url_for('static', filename='plank.jpeg') }}" alt="Plank">
                 <h3>Plank</h3>
             </a>
 
