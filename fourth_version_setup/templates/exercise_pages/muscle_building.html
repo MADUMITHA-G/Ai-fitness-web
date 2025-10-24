@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muscle Building | AI Fitness Coach</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000;
+      color: #facc15;
+    }
+    .fade-in {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="p-6 bg-black border-b border-yellow-400 flex justify-between items-center">
+    <h1 class="text-2xl font-extrabold">AI<span class="text-white">FitnessCoach</span></h1>
+
+  </header>
+
+  <!-- Page Title -->
+  <section class="text-center py-12">
+    <h2 class="text-4xl font-bold mb-3">Muscle Building Workouts</h2>
+    <p class="text-lg text-yellow-300" style="color: white;">Powerful No-Equipment Routines to Build Strength and Mass</p>
+  </section>
+
+  <!-- Workout Grid -->
+  <main class="max-w-6xl mx-auto px-6 pb-20 fade-in">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Workout 1: Push-Ups (placeholder) -->
+      <a href="{{ url_for('workouts.workout', exercise='wallpushup') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='push_ups.jpg') }}" class="w-full h-56 object-cover" alt="Push-Ups" loading="lazy" decoding="async">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Push-Ups</h3>
+          <p class="text-yellow-200 text-sm">Builds chest, shoulders, and triceps. Do 3 sets of 15 reps.</p>
+        </div>
+      </a>
+
+      <!-- Workout 2: Bodyweight Squats (implemented -> squat) -->
+      <a href="{{ url_for('workouts.workout', exercise='squat') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='bodyweight_squats.jpg') }}" class="w-full h-56 object-cover" alt="Bodyweight Squats" loading="lazy" decoding="async">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Bodyweight Squats</h3>
+          <p class="text-yellow-200 text-sm">Develops lower body muscles like quads and glutes. 3 sets of 20 reps.</p>
+        </div>
+      </a>
+
+      <!-- Workout 3: Plank Hold (placeholder) -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='plank.jpg') }}" class="w-full h-56 object-cover" alt="Plank Hold" loading="lazy" decoding="async">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Plank Hold</h3>
+          <p class="text-yellow-200 text-sm">Strengthens your core and stabilizers. Hold 45 seconds × 3 sets.</p>
+        </div>
+      </a>
+
+      <!-- Workout 4: Lunges (placeholder) -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='lunges.jpg') }}" class="w-full h-56 object-cover" alt="Lunges" loading="lazy" decoding="async">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Lunges</h3>
+          <p class="text-yellow-200 text-sm">Targets hamstrings and glutes. 10 reps per leg × 3 rounds.</p>
+        </div>
+      </a>
+
+      <!-- Workout 5: Burpees (placeholder) -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='burpees.jpg') }}" class="w-full h-56 object-cover" alt="Burpees" loading="lazy" decoding="async">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Burpees</h3>
+          <p class="text-yellow-200 text-sm">Full-body exercise for strength and stamina. 3 sets of 10 reps.</p>
+        </div>
+      </a>
+
+      <!-- Workout 6: Mountain Climbers (placeholder) -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='mountain_climbers.jpg') }}" class="w-full h-56 object-cover" alt="Mountain Climbers" loading="lazy" decoding="async">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Mountain Climbers</h3>
+          <p class="text-yellow-200 text-sm">Activates core and shoulders while burning fat. 30 seconds × 3 rounds.</p>
+        </div>
+      </a>
+
+      <!-- Workout 7: Tricep Dips (placeholder) -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='tricep_dips.jpg') }}" class="w-full h-56 object-cover" alt="Tricep Dips" loading="lazy" decoding="async">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Tricep Dips</h3>
+          <p class="text-yellow-200 text-sm">Tones arms and chest. Perform 3 sets of 12 reps using a chair.</p>
+        </div>
+      </a>
+
+      <!-- Workout 8: Superman Hold (placeholder) -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='w-superman.jpg') }}" class="w-full h-56 object-cover" alt="Superman Hold" loading="lazy" decoding="async">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Superman Hold</h3>
+          <p class="text-yellow-200 text-sm">Builds lower back and glutes. Hold for 20 seconds × 3 sets.</p>
+        </div>
+      </a>
+
+      <!-- Workout 9: Bicycle Crunches (implemented -> crunches) -->
+      <a href="{{ url_for('workouts.workout', exercise='crunches') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='bicycle_crunches.jpg') }}" class="w-full h-56 object-cover" alt="Bicycle Crunches" loading="lazy" decoding="async">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Bicycle Crunches</h3>
+          <p class="text-yellow-200 text-sm">Strengthens abs and obliques. 3 sets of 20 reps.</p>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-sm text-yellow-500 border-t border-yellow-400 py-4">
+    &copy; 2025 AIFitnessCoach
+  </footer>
+
+</body>
+</html>

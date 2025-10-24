@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}30-Day Diet Plan | AI Fitness Coach{% endblock %}
+
+{% block head %}
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000;
+      color: #facc15;
+    }
+
+    .meal-box {
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #facc15;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .back-btn {
+      background-color: #facc15;
+      color: black;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 0.75rem 2rem;
+      transition: all 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #fde047;
+    }
+  </style>
+{% endblock %}
+
+{% block header %}30-Day Diet Plan{% endblock %}
+
+{% block content %}
+
+
+
+  <!-- Main Content -->
+  <main >
+    <section class="text-center mb-10">
+      <h1 class="text-4xl font-extrabold text-yellow-400 mb-4">Day 2 Meal Plan</h1>
+      <p class="text-yellow-300 text-lg mb-6">Total: 1,484 calories (adjustable to 2,000)</p>
+    </section>
+
+    <div class="max-w-3xl mx-auto space-y-6">
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Breakfast (287 calories)</h2>
+        <p style="color: white;">1 serving Muesli with Raspberries</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Morning Snack (282 calories)</h2>
+        <p style="color: white;">1 cup low-fat plain Greek yogurt<br>¼ cup blueberries<br>2 Tbsp. chopped walnuts</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Lunch (337 calories)</h2>
+        <p style="color: white;">1 serving Brussels Sprouts Salad with Crunchy Chickpeas</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Afternoon Snack (95 calories)</h2>
+        <p style="color: white;">1 medium apple</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Dinner (483 calories)</h2>
+        <p style="color: white;">1 serving Herb-Grilled Chicken Frites</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Daily Totals</h2>
+        <p style="color: white;">1,484 calories, 77g protein, 158g carbohydrates, 36g fiber, 68g fat, 1,223mg sodium</p>
+        <p class="mt-2 text-yellow-300" style="color: white;"><strong>To make it 2,000 calories:</strong> Add 3 Tbsp. natural peanut butter to P.M. snack and add 1 serving Cucumber & Avocado Salad to dinner.</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-10">
+      <a href="{{ url_for('diet') }}" class="back-btn">⬅ Back to 30-Day Plan</a>
+    </div>
+  </main>
+
+
+  {% endblock %}

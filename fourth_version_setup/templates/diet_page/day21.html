@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}30-Day Diet Plan | AI Fitness Coach{% endblock %}
+
+{% block head %}
+<style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000;
+      color: #facc15;
+    }
+
+    .meal-box {
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #facc15;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .back-btn {
+      background-color: #facc15;
+      color: black;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 0.75rem 2rem;
+      transition: all 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #fde047;
+    }
+  </style>
+{% endblock %}
+
+{% block header %}30-Day Diet Plan{% endblock %}
+
+{% block content %}
+
+  <!-- Main Content -->
+  <main>
+    <section class="text-center mb-10">
+      <h1 class="text-4xl font-extrabold text-yellow-400 mb-4">Day 21 Meal Plan</h1>
+      <p class="text-yellow-300 text-lg mb-6">Total: 1,540 calories (adjustable to 2,000)</p>
+    </section>
+
+    <div class="max-w-3xl mx-auto space-y-6">
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Breakfast (345 calories)</h2>
+        <p style="color: white;">1 serving Spinach & Mushroom Scramble<br>1 slice whole-grain toast<br>1 small orange</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Morning Snack (150 calories)</h2>
+        <p style="color: white;">½ cup cottage cheese<br>½ cup sliced strawberries</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Lunch (375 calories)</h2>
+        <p style="color: white;">1 serving Turkey & Veggie Quinoa Bowl with Roasted Zucchini & Cherry Tomatoes</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Afternoon Snack (200 calories)</h2>
+        <p style="color: white;">1 medium apple<br>10 almonds</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Dinner (470 calories)</h2>
+        <p style="color: white;">1 serving Grilled Cod with Steamed Broccoli & ½ cup Brown Rice</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Daily Totals</h2>
+        <p style="color: white;">1,540 calories, 91g protein, 133g carbohydrates, 34g fiber, 78g fat, 835mg sodium</p>
+        <p class="mt-2 text-yellow-300" style="color: white;"><strong>To make it 2,000 calories:</strong> Add 1 slice whole-grain toast with almond butter to breakfast, increase almonds to ¼ cup at A.M. snack, and add 1 serving Mixed Greens Salad with Olive Oil Dressing to dinner.</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-10">
+      <a href="{{ url_for('diet') }}" class="back-btn">⬅ Back to 30-Day Plan</a>
+    </div>
+  </main>
+  
+  {% endblock %}

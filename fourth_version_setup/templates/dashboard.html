@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Exercise - AI Fitness Coach{% endblock %}
+{% block header %}Choose Your Workout{% endblock %}
+{% block content %}
+<div class="card-grid">
+    <a href="{{ url_for('workouts.workout', exercise='highstep') }}" class="card">
+        <img src="{{ url_for('static', filename='high_step.jpg') }}" alt="High Steps">
+        <h3>High Steps</h3>
+    </a>
+
+    <a href="{{ url_for('workouts.workout', exercise='squat') }}" class="card">
+        <img src="{{ url_for('static', filename='squat.jpg') }}" alt="Squats">
+        <h3>Squats</h3>
+    </a>
+
+    <a href="{{ url_for('workouts.workout', exercise='curl') }}" class="card">
+        <img src="{{ url_for('static', filename='curl.jpg') }}" alt="Biceps Curls">
+        <h3>Biceps Curls</h3>
+    </a>
+
+    <a href="{{ url_for('workouts.workout', exercise='wallpushup') }}" class="card">
+        <img src="{{ url_for('static', filename='wall_pushup.jpg') }}" alt="Wall Pushups">
+        <h3>Wall Pushups</h3>
+    </a>
+
+    <a href="{{ url_for('workout_placeholder') }}" class="card">
+        <img src="{{ url_for('static', filename='plank.jpeg') }}" alt="Plank">
+        <h3>Plank</h3>
+    </a>
+
+    <a href="{{ url_for('workouts.workout', exercise='crunches') }}" class="card">
+        <img src="{{ url_for('static', filename='crunches.png') }}" alt="crunches">
+        <h3>Crunches</h3>
+    </a>
+
+    <a href="{{ url_for('workout_placeholder') }}" class="card">
+        <img src="{{ url_for('static', filename='lunges.png') }}" alt="Squats">
+        <h3>Lunges</h3>
+    </a>
+
+    <a href="{{ url_for('workout_placeholder') }}" class="card">
+        <img src="{{ url_for('static', filename='jj.jpeg') }}" alt="Wall Pushups">
+        <h3>Jumping Jacks</h3>
+    </a>
+</div>
+
+<style>
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+}
+.card {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 6px 16px rgba(0,0,0,0.7); background-color: rgba(0,0,0,0.9); }
+.card img { width: 100%; height: auto; border-radius: 8px; object-fit: cover; margin-bottom: 1rem; transition: transform 0.3s ease; }
+.card:hover img { transform: scale(1.05); }
+.card h3 { font-size: 1.25rem; font-weight: 600; text-align: center; color: #eaea87; }
+</style>
+{% endblock %}

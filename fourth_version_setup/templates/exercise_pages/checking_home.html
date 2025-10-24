@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}Workout Plans - AI Fitness Coach{% endblock %}
+{% block header %}Free Workout Plans{% endblock %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="relative h-[60vh] flex items-center justify-center text-center text-yellow-400 hero-gradient mb-12" style="position: relative;">
+  <img src="{{ url_for('static', filename='pic/bg.jpg') }}"
+       alt="Gym Background"
+       loading="lazy"
+       class="absolute inset-0 w-full h-full object-cover">
+  <div class="absolute inset-0 bg-black/50"></div>
+
+  
+
+  <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent to-black"></div>
+</section>
+
+<!-- Workout Categories -->
+<section class="py-8 max-w-7xl mx-auto px-4 fade-in">
+  <h2 class="text-3xl font-bold text-center mb-8">Workout Categories</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+    <!-- Men (explicit filename you provided) -->
+    <a href="{{ url_for('home') }}" class="relative overflow-hidden rounded-2xl group block">
+      <img src="{{ url_for('static', filename='men.jpg') }}" alt="Workouts for Men" loading="lazy" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Workouts for Men</div>
+    </a>
+
+    <!-- Woman (explicit filename you provided) -->
+    <a href="{{ url_for('static', filename='exercise_pages/woman-workout.html') }}" class="relative overflow-hidden rounded-2xl group block">
+      <img src="{{ url_for('static', filename='women.jpg') }}" alt="Workouts for Women" loading="lazy" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Workouts for Women</div>
+    </a>
+
+    <!-- For the rest I used convention-based filenames (edit if your files are named differently) -->
+    <a href="{{ url_for('static', filename='exercise_pages/muscle-workout.html') }}" class="relative overflow-hidden rounded-2xl group block">
+      <img src="{{ url_for('static', filename='abs.jpg') }}" alt="Muscle Building" loading="lazy" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Muscle Building</div>
+    </a>
+
+    <a href="{{ url_for('static', filename='exercise_pages/fat-loss-workout.html') }}" class="relative overflow-hidden rounded-2xl group block">
+      <img src="{{ url_for('static', filename='fat.jpg') }}" alt="Fat Loss" loading="lazy" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Fat Loss</div>
+    </a>
+
+    <a href="{{ url_for('static', filename='exercise_pages/strength-workout.html') }}" class="relative overflow-hidden rounded-2xl group block">
+      <img src="{{ url_for('static', filename='incr.jpg') }}" alt="Increase Strength" loading="lazy" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Increase Strength</div>
+    </a>
+
+    <a href="{{ url_for('static', filename='exercise_pages/abs-workout.html') }}" class="relative overflow-hidden rounded-2xl group block">
+      <img src="{{ url_for('static', filename='abs1.jpg') }}" alt="Ab Workouts" loading="lazy" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Ab Workouts</div>
+    </a>
+
+    <a href="{{ url_for('static', filename='exercise_pages/fullbody-workout.html') }}" class="relative overflow-hidden rounded-2xl group block">
+      <img src="{{ url_for('static', filename='full.jpg') }}" alt="Full Body Workouts" loading="lazy" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Full Body</div>
+    </a>
+
+    <a href="{{ url_for('static', filename='exercise_pages/sports-performance-workout.html') }}" class="relative overflow-hidden rounded-2xl group block">
+      <img src="{{ url_for('static', filename='sports.jpg') }}" alt="Sports Performance" loading="lazy" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Sports Performance</div>
+    </a>
+
+  </div>
+</section>
+
+<style>
+  .hero-gradient {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.25), #000000 90%);
+  }
+  .fade-in {
+    animation: fadeInUp 0.8s ease-out;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (min-width: 768px) {
+    section { max-width: 1200px; margin-left: auto; margin-right: auto; }
+  }
+</style>
+
+{% endblock %}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Crunches Workout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    body {
+        font-family: 'Inter', sans-serif; background-color: #0d0d0d; color: #f0f0f0;
+        min-height: 100vh; display: flex; flex-direction: column;
+    }
+    .header {background: #1a1a1a; padding:1rem 2rem; box-shadow:0 4px 8px rgba(0,0,0,0.4); display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #ffcc00;}
+    .header h1 {font-size: 1.5rem; font-weight: 700; color:#ffcc00;}
+    .header a {color:#ffcc00; font-weight:600; text-decoration:none; transition: color 0.2s;}
+    .header a:hover {color:#fff;}
+    .main-content {flex-grow: 1; padding: 2rem; display: flex; flex-direction:column; align-items:center;}
+    .workout-container {display:flex; flex-direction:row; gap:2rem; width:100%; max-width:1200px; background:#1a1a1a; padding:2.5rem; border-radius:12px; box-shadow:0 8px 16px rgba(0,0,0,0.5); border:1px solid #333;}
+    @media (max-width:768px) {.workout-container {flex-direction:column;}}
+    .info-panel {flex:1; padding-right:2rem; border-right:1px solid #333; display:flex; flex-direction:column; justify-content:center;}
+    .info-panel h2 {font-size:2rem;font-weight:600;color:#ffcc00;margin-bottom:1rem;}
+    .info-panel p {font-size:1.05rem; line-height:1.6; color:#ccc;}
+    .count-display {background:#ffcc00;color:#1a1a1a;border-radius:12px;padding:1.5rem;text-align:center;margin-top:1.5rem;box-shadow:0 4px 8px rgba(0,0,0,0.3);}
+    .count-display h3 {font-size:1.1rem;font-weight:600;}
+    .count-display .reps {font-size:3rem;font-weight:700;margin-top:.5rem;}
+    .video-panel {flex:2;display:flex;justify-content:center;align-items:center;background:#000;border-radius:12px;overflow:hidden;position:relative;min-height:360px;box-shadow:0 4px 12px rgba(0,0,0,0.5);border:1px solid #333;}
+    #processed-feed {width:100%;height:auto;border-radius:12px;object-fit:contain;display:block;}
+    #message-box {position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.8);color:#ffcc00;padding:.8rem 1.2rem;border-radius:8px;font-size:1rem;display:none;z-index:10;border:1px solid #ffcc00;}
+    .loader {border:6px solid #333;border-top:6px solid #ffcc00;border-radius:50%;width:42px;height:42px;animation:spin 1s linear infinite;position:absolute;bottom:16px;right:16px;display:none;}
+    @keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+    #video{display:none;}
+    .controls {margin-top:12px; display:flex; gap:12px; align-items:center;}
+    .timer {font-size:1.5rem;font-weight:600;color:#ffcc00;margin-left:12px;}
+    .btn {background:#ffcc00;color:#1a1a1a;padding:10px 18px;border-radius:6px;text-decoration:none;cursor:pointer;border:none;font-weight:600;transition: background-color 0.2s, transform 0.2s;}
+    .btn:hover{background:#e6b800;transform:translateY(-2px);}
+    .btn-stop{background:#c0392b;color:#fff;}
+    .btn-stop:hover{background:#a93226;}
+    </style>
+</head>
+<body>
+<header class="header">
+    <h1>Crunches Workout — Welcome{{ ' ' + name if name is defined else '' }}</h1>
+    <nav><a href="{{ url_for('dashboard') }}">Dashboard</a></nav>
+</header>
+<main class="main-content">
+    <div class="workout-container">
+        <div class="info-panel">
+            <h2>Crunches Exercise</h2>
+            <p>Lie on your back with knees bent. Lift your shoulder blades off the mat using your abdominal muscles and then return to the starting position. The app will count one rep each time you crunch up and return with good form.</p>
+            <div class="count-display">
+                <h3>REPS</h3>
+                <div class="reps" id="reps-count">0</div>
+            </div>
+            <div class="controls">
+                <button id="start-btn" class="btn btn-start">Start</button>
+                <button id="stop-btn" class="btn btn-stop">Stop</button>
+                <div class="timer" id="timer">00:00</div>
+            </div>
+        </div>
+        <div class="video-panel">
+            <img id="processed-feed" alt="Processed Camera Feed" />
+            <div id="message-box"></div>
+            <div id="loader" class="loader"></div>
+        </div>
+    </div>
+</main>
+<video id="video" autoplay playsinline></video>
+<canvas id="capture-canvas" style="display:none;"></canvas>
+<script>
+const video = document.getElementById('video');
+const canvas = document.getElementById('capture-canvas');
+const processedFeed = document.getElementById('processed-feed');
+const repsCount = document.getElementById('reps-count');
+const timerDisplay = document.getElementById('timer');
+const loader = document.getElementById('loader');
+const messageBox = document.getElementById('message-box');
+let stream = null;
+let isProcessing = false;
+let timer = null;
+let seconds = 0;
+let timerRunning = false;
+function showMessage(msg) { messageBox.textContent = msg; messageBox.style.display = 'block'; }
+function hideMessage() { messageBox.style.display = 'none'; }
+function showLoader() { loader.style.display = 'block'; }
+function hideLoader() { loader.style.display = 'none'; }
+function formatTime(sec) { const m = String(Math.floor(sec / 60)).padStart(2, '0'); const s = String(sec % 60).padStart(2, '0'); return `${m}:${s}`; }
+async function startSession() { if (timerRunning) return; try { const r = await fetch('/start_exercise', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ exercise:'crunches' }) }); const j = await r.json(); if (!j.ok) { showMessage('Could not start session.'); return; } } catch (e) { console.error(e); showMessage('Server unreachable.'); return; } timerRunning = true; seconds = 0; repsCount.textContent = "0"; timerDisplay.textContent = formatTime(seconds); timer = setInterval(() => { seconds++; timerDisplay.textContent = formatTime(seconds); }, 1000); if (!isProcessing) startProcessing(); }
+async function stopSession() { if (!timerRunning) return; try { const r = await fetch('/stop_exercise', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ exercise:'crunches' }) }); const j = await r.json(); if (j && j.ok) { repsCount.textContent = j.reps; } } catch (e) { console.error(e); } timerRunning = false; clearInterval(timer); seconds = 0; timerDisplay.textContent = '00:00'; isProcessing = false; }
+async function initCamera() { try { stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } }); video.srcObject = stream; await new Promise(resolve => video.onloadedmetadata = resolve); processedFeed.style.display = 'block'; startProcessing(); } catch (err) { console.error('Camera error:', err); showMessage('Camera access denied or unavailable. Please enable your camera and reload.'); } }
+function startProcessing() { const ctx = canvas.getContext('2d'); canvas.width = video.videoWidth || 640; canvas.height = video.videoHeight || 480; isProcessing = true; async function processFrame() { if (!isProcessing) return; try { ctx.drawImage(video, 0, 0, canvas.width, canvas.height); const dataUrl = canvas.toDataURL('image/jpeg', 0.8); showLoader(); const res = await fetch((typeof processUrl !== 'undefined' && processUrl) || '/process/crunches', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ image: dataUrl }) }); if (!res.ok) { const err = await res.text(); console.error('Server error:', err); hideLoader(); showMessage('Server error while processing frame.'); isProcessing = false; return; } const data = await res.json(); hideLoader(); if (data.image) processedFeed.src = data.image; if (timerRunning && data.count !== undefined) { repsCount.textContent = data.count; } } catch (e) { console.error('Processing error:', e); hideLoader(); showMessage('Error processing frames. Check console.'); isProcessing = false; } if (isProcessing) requestAnimationFrame(processFrame); } if (isProcessing) requestAnimationFrame(processFrame); }
+document.getElementById('start-btn').addEventListener('click', startSession);
+document.getElementById('stop-btn').addEventListener('click', stopSession);
+window.onload = initCamera;
+window.onbeforeunload = () => { if (stream) stream.getTracks().forEach(t => t.stop()); };
+</script>
+</body>
+</html>
+

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workout Plans | AI Fitness Coach</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000;
+      color:white;
+      overflow-x: hidden;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), #000000 90%);
+    }
+
+    .fade-in {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Main Content -->
+  <main class="w-full overflow-hidden">
+
+    <!-- Hero Section -->
+    <section class="relative h-[80vh] flex items-center justify-center text-center text-white-400 hero-gradient">
+      <img src="bg.jpg" alt="Gym Background" >
+      <img src="{{ url_for('static', filename='bg.jpg') }}"  class="absolute inset-0 w-full h-full object-cover" alt="main bg">
+      <div class="absolute inset-0 bg-black/50"></div>
+      <div class="relative z-10 px-6">
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">AI Fitness Coach</h1>
+        <p class="text-xl md:text-2xl text-white-300 drop-shadow-md">Harness the power of AI to perfect your form and achieve your 
+          fitness goals. Our real-time camera analysis provides instant feedback on your exercises, ensuring you train smarter, safer, and more effectively. Start your journey to a stronger you today.</p>
+        <button class="mt-6 bg-yellow-400 text-black font-bold px-6 py-3 rounded-full hover:bg-yellow-300 transition transform hover:scale-105"
+        onclick="window.location.href='/register'">
+          Explore Now
+        </button>
+      </div>
+      <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent to-black"></div>
+    </section>
+
+    <!-- Workout Categories -->
+    <section class="py-20 max-w-7xl mx-auto px-6 fade-in">
+      <h2 class="text-4xl font-bold text-center mb-12">Our Workout Categories</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+        <!-- Existing Workout Cards -->
+        <div class="relative overflow-hidden rounded-2xl group">
+          <img src="{{ url_for('static', filename='men.jpg') }}" class="w-full h-56 object-cover group-hover:scale-110 transition duration-500" />
+          <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Workouts for Men</div>
+        </div>
+        <div class="relative overflow-hidden rounded-2xl group">
+          <img src="{{ url_for('static', filename='women.jpg') }}" class="w-full h-56 object-cover group-hover:scale-110 transition duration-500" />
+          <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Workouts for Women</div>
+        </div>
+        <div class="relative overflow-hidden rounded-2xl group">
+          <img src="{{ url_for('static', filename='abs.jpg') }}" class="w-full h-56 object-cover group-hover:scale-110 transition duration-500" />
+          <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Muscle Building</div>
+        </div>
+        <div class="relative overflow-hidden rounded-2xl group">
+          <img src="{{ url_for('static', filename='fat.jpg') }}" class="w-full h-56 object-cover group-hover:scale-110 transition duration-500" />
+          <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Fat Loss</div>
+        </div>
+        <div class="relative overflow-hidden rounded-2xl group">
+          <img src="{{ url_for('static', filename='incr.jpg') }}" class="w-full h-56 object-cover group-hover:scale-110 transition duration-500" />
+          <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Increase Strength</div>
+        </div>
+        <div class="relative overflow-hidden rounded-2xl group">
+          <img src="{{ url_for('static', filename='abs1.jpg') }}" class="w-full h-56 object-cover group-hover:scale-110 transition duration-500" />
+          <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Ab Workouts</div>
+        </div>
+        <div class="relative overflow-hidden rounded-2xl group">
+          <img src="{{ url_for('static', filename='full.jpg') }}" class="w-full h-56 object-cover group-hover:scale-110 transition duration-500" />
+          <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Full Body</div>
+        </div>
+        <div class="relative overflow-hidden rounded-2xl group">
+          <img src="{{ url_for('static', filename='full.jpg') }}" class="w-full h-56 object-cover group-hover:scale-110 transition duration-500" />
+          <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-lg font-bold group-hover:bg-black/30 transition">Sports Performance</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Diet Plan Section -->
+    <section class="py-20 max-w-7xl mx-auto px-6 fade-in">
+      <h2 class="text-4xl font-bold text-center mb-12">Diet Plan</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <img src="{{ url_for('static', filename='diett.jpg') }}" alt="Diet Plan Image" class="w-full h-72 object-cover rounded-2xl shadow-lg">
+        
+        <p class="text-lg text-white-300">
+          A balanced diet is essential for achieving your fitness goals. Our diet plan section provides guidelines on healthy eating habits, meal suggestions, and nutritional tips to support your workouts and overall well-being.
+        </p>
+      </div>
+    </section>
+
+    <!-- Chatbot Section -->
+    <section class="py-20 max-w-7xl mx-auto px-6 fade-in">
+      <h2 class="text-4xl font-bold text-center mb-12">Chatbot</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        
+        <p class="text-lg text-white-300">
+          Our AI-powered Chatbot helps answer your fitness-related questions, provides guidance on workouts and diet, and offers real-time support to keep you motivated on your fitness journey.
+        </p>
+        <img src="{{ url_for('static', filename='chatbotIcon.png') }}" alt="Chatbot Image" class="w-full h-72 object-cover rounded-2xl shadow-lg">
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

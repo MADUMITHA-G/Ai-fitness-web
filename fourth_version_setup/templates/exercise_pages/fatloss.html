@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fat Loss Workouts | AI Fitness Coach</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000;
+      color: #facc15;
+    }
+    .fade-in {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="p-6 bg-black border-b border-yellow-400 flex justify-between items-center">
+    <h1 class="text-2xl font-extrabold">AI<span class="text-white">FitnessCoach</span></h1>
+  </header>
+
+  <!-- Page Title -->
+  <section class="text-center py-12">
+    <h2 class="text-4xl font-bold mb-3">Fat Loss Workouts</h2>
+    <p class="text-lg text-yellow-300">High-Intensity, No-Equipment Exercises</p>
+  </section>
+
+  <!-- Workout Grid -->
+  <main class="max-w-6xl mx-auto px-6 pb-20 fade-in">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Burpees -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='burpees.jpg') }}" class="w-full h-56 object-cover" alt="Burpees" loading="lazy">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Burpees</h3>
+          <p class="text-yellow-200 text-sm">Full-body fat burner. 3 sets of 12 reps.</p>
+        </div>
+      </a>
+
+      <!-- Jumping Jacks -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='jj.jpeg') }}" class="w-full h-56 object-cover" alt="Jumping Jacks" loading="lazy">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Jumping Jacks</h3>
+          <p class="text-yellow-200 text-sm">Boosts cardio and calorie burn. 3 rounds × 40 seconds.</p>
+        </div>
+      </a>
+
+      <!-- High Knees -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='w-high-knees.jpg') }}" class="w-full h-56 object-cover" alt="High Knees" loading="lazy">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">High Knees</h3>
+          <p class="text-yellow-200 text-sm">Cardio + core engagement. 3 rounds × 30 seconds.</p>
+        </div>
+      </a>
+
+      <!-- Mountain Climbers -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='mountain_climbers.jpg') }}" class="w-full h-56 object-cover" alt="Mountain Climbers" loading="lazy">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Mountain Climbers</h3>
+          <p class="text-yellow-200 text-sm">Cardio + core. 3 sets × 30 seconds.</p>
+        </div>
+      </a>
+
+      <!-- Squats -->
+      <a href="{{ url_for('workouts.workout', exercise='squat') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='squat.jpg') }}" class="w-full h-56 object-cover" alt="Bodyweight Squats" loading="lazy">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Bodyweight Squats</h3>
+          <p class="text-yellow-200 text-sm">Leg & glute activation. 20 reps × 3 sets.</p>
+        </div>
+      </a>
+
+      <!-- Wall Push-Ups -->
+      <a href="{{ url_for('workouts.workout', exercise='wallpushup') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='wall_pushup.jpg') }}" class="w-full h-56 object-cover" alt="Wall Push-Ups" loading="lazy">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Wall Push-Ups</h3>
+          <p class="text-yellow-200 text-sm">Chest & arms activation. 3 sets × 15 reps.</p>
+        </div>
+      </a>
+
+      <!-- Lunges -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='lunges.jpg') }}" class="w-full h-56 object-cover" alt="Lunges" loading="lazy">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Lunges</h3>
+          <p class="text-yellow-200 text-sm">Leg strength & balance. 10 reps each leg × 3 sets.</p>
+        </div>
+      </a>
+
+      <!-- Plank -->
+      <a href="{{ url_for('workout_placeholder') }}" class="bg-black border border-yellow-400 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 block">
+        <img src="{{ url_for('static', filename='plank.jpeg') }}" class="w-full h-56 object-cover" alt="Plank" loading="lazy">
+        <div class="p-5">
+          <h3 class="text-xl font-bold mb-2">Plank</h3>
+          <p class="text-yellow-200 text-sm">Core endurance. Hold 45 seconds × 3 rounds.</p>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <footer class="text-center text-sm text-yellow-500 border-t border-yellow-400 py-4">
+    &copy; 2025 AIFitnessCoach
+  </footer>
+
+</body>
+</html>

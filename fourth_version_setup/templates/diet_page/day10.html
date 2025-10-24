@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}30-Day Diet Plan | AI Fitness Coach{% endblock %}
+
+{% block head %}
+<style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000;
+      color: #facc15;
+    }
+
+    .meal-box {
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #facc15;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .back-btn {
+      background-color: #facc15;
+      color: black;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 0.75rem 2rem;
+      transition: all 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #fde047;
+    }
+  </style>
+{% endblock %}
+
+{% block header %}30-Day Diet Plan{% endblock %}
+
+{% block content %}
+
+  <!-- Main Content -->
+  <main>
+    <section class="text-center mb-10">
+      <h1 class="text-4xl font-extrabold text-yellow-400 mb-4">Day 10 Meal Plan</h1>
+      <p class="text-yellow-300 text-lg mb-6">Total: 1,517 calories (adjustable to 2,000)</p>
+    </section>
+
+    <div class="max-w-3xl mx-auto space-y-6">
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Breakfast (327 calories)</h2>
+        <p style="color: white;">1 serving Peanut Butter, Spinach & Banana Smoothie</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Morning Snack (64 calories)</h2>
+        <p style="color: white;">1 cup raspberries</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Lunch (364 calories)</h2>
+        <p style="color: white;">1 serving Spicy Slaw Bowls with Shrimp & Edamame</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Afternoon Snack (324 calories)</h2>
+        <p style="color: white;">1 cup blackberries<br>20 walnut halves</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Dinner (442 calories)</h2>
+        <p style="color: white;">1 serving Grilled Flank Steak with Tomato Salad<br>1 (1-ounce) slice whole-wheat baguette</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Daily Totals</h2>
+        <p style="color: white;">1,517 calories, 83g protein, 123g carbohydrates, 34g fiber, 83g fat, 1,100mg sodium</p>
+        <p class="mt-2 text-yellow-300" style="color: white;"><strong>To make it 2,000 calories:</strong> Add 1 peach to breakfast, add ⅓ cup almonds to A.M. snack, and add 1 serving Everything Bagel Avocado Toast to dinner.</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-10">
+      <a href="{{ url_for('diet') }}" class="back-btn">⬅ Back to 30-Day Plan</a>
+    </div>
+  </main>
+  
+  {% endblock %}

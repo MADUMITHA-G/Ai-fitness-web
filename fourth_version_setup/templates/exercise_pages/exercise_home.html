@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}Workout Plans - AI Fitness Coach{% endblock %}
+{% block header %}Free Workout Plans{% endblock %}
+{% block content %}
+
+<!-- Workout Categories -->
+<section class="py-12 max-w-7xl mx-auto px-6 fade-in">
+  <h2 class="text-4xl font-extrabold text-center mb-10 tracking-wide">Workout Categories</h2>
+
+  <!-- 3-column grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    <!-- Men -->
+    <a href="{{ url_for('men_workout') }}"
+       class="relative overflow-hidden rounded-3xl group block shadow-lg hover:shadow-2xl transition duration-300">
+      <img src="{{ url_for('static', filename='men.jpg') }}" 
+           alt="Workouts for Men"
+           class="w-full h-80 object-cover group-hover:scale-110 transition duration-700" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-2xl font-bold tracking-wide group-hover:bg-black/30 transition">
+        Workouts for Men
+      </div>
+    </a>
+
+    <!-- Women -->
+    <a href="{{ url_for('women_workout') }}" 
+       class="relative overflow-hidden rounded-3xl group block shadow-lg hover:shadow-2xl transition duration-300">
+      <img src="{{ url_for('static', filename='women.jpg') }}" 
+           alt="Workouts for Women"
+           class="w-full h-80 object-cover group-hover:scale-110 transition duration-700" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-2xl font-bold tracking-wide group-hover:bg-black/30 transition">
+        Workouts for Women
+      </div>
+    </a>
+
+    <!-- Muscle Building -->
+    <a href="{{ url_for('muscle_building') }}" 
+       class="relative overflow-hidden rounded-3xl group block shadow-lg hover:shadow-2xl transition duration-300">
+      <img src="{{ url_for('static', filename='abs.jpg') }}" 
+           alt="Muscle Building"
+           class="w-full h-80 object-cover group-hover:scale-110 transition duration-700" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-2xl font-bold tracking-wide group-hover:bg-black/30 transition">
+        Muscle Building
+      </div>
+    </a>
+
+    <!-- Fat Loss -->
+    <a href="{{ url_for('fatloss') }}"
+       class="relative overflow-hidden rounded-3xl group block shadow-lg hover:shadow-2xl transition duration-300">
+      <img src="{{ url_for('static', filename='fat.jpg') }}" 
+           alt="Fat Loss"
+           class="w-full h-80 object-cover group-hover:scale-110 transition duration-700" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-2xl font-bold tracking-wide group-hover:bg-black/30 transition">
+        Fat Loss
+      </div>
+    </a>
+
+    <!-- Abs -->
+    <a href="{{ url_for('abs_workout') }}"
+       class="relative overflow-hidden rounded-3xl group block shadow-lg hover:shadow-2xl transition duration-300">
+      <img src="{{ url_for('static', filename='abs1.jpg') }}" 
+           alt="Ab Workouts"
+           class="w-full h-80 object-cover group-hover:scale-110 transition duration-700" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-2xl font-bold tracking-wide group-hover:bg-black/30 transition">
+        Abs Workouts
+      </div>
+    </a>
+
+    <!-- Full Body -->
+    <a href="{{ url_for('fullbody') }}"
+       class="relative overflow-hidden rounded-3xl group block shadow-lg hover:shadow-2xl transition duration-300">
+      <img src="{{ url_for('static', filename='full.jpg') }}" 
+           alt="Full Body Workouts"
+           class="w-full h-80 object-cover group-hover:scale-110 transition duration-700" />
+      <div class="absolute inset-0 bg-black/60 flex items-center justify-center text-2xl font-bold tracking-wide group-hover:bg-black/30 transition">
+        Full Body
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<style>
+  .fade-in {
+    animation: fadeInUp 0.8s ease-out;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+{% endblock %}

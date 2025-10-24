@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}30-Day Diet Plan | AI Fitness Coach{% endblock %}
+
+{% block head %}
+ <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000;
+      color: #facc15;
+    }
+
+    .meal-box {
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #facc15;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .back-btn {
+      background-color: #facc15;
+      color: black;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 0.75rem 2rem;
+      transition: all 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #fde047;
+    }
+  </style>
+{% endblock %}
+
+{% block header %}30-Day Diet Plan{% endblock %}
+
+{% block content %}
+
+  <!-- Main Content -->
+  <main>
+    <section class="text-center mb-10">
+      <h1 class="text-4xl font-extrabold text-yellow-400 mb-4">Day 11 Meal Plan</h1>
+      <p class="text-yellow-300 text-lg mb-6">Total: 1,507 calories (adjustable to 2,000)</p>
+    </section>
+
+    <div class="max-w-3xl mx-auto space-y-6">
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Breakfast (320 calories)</h2>
+        <p style="color: white;">1 cup low-fat plain Greek yogurt<br>1 medium peach, sliced<br>2 Tbsp. chopped walnuts</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Morning Snack (270 calories)</h2>
+        <p style="color: white;">1 cup raspberries<br>¼ cup unsalted dry-roasted almonds</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Lunch (364 calories)</h2>
+        <p style="color: white;">1 serving Spicy Slaw Bowls with Shrimp & Edamame</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Afternoon Snack (135 calories)</h2>
+        <p style="color: white;">1 plum<br>8 walnut halves</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Dinner (418 calories)</h2>
+        <p style="color: white;">1 serving Grilled Pizza with Summer Squash, Feta & Basil</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Daily Totals</h2>
+        <p style="color: white;">1,507 calories, 82g protein, 128g carbohydrates, 30g fiber, 82g fat, 1,151mg sodium</p>
+        <p class="mt-2 text-yellow-300" style="color: white;"><strong>To make it 2,000 calories:</strong> Increase to 4 Tbsp. walnuts at breakfast, increase to ⅓ cup almonds at A.M. snack, increase to ⅓ cup walnuts at P.M. snack, and add 1 serving Cucumber & Avocado Salad to dinner.</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-10">
+      <a href="{{ url_for('diet') }}" class="back-btn">⬅ Back to 30-Day Plan</a>
+    </div>
+  </main>
+  {% endblock %}

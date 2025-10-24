@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}30-Day Diet Plan | AI Fitness Coach{% endblock %}
+
+{% block head %}
+<style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #000;
+      color: #facc15;
+    }
+
+    .meal-box {
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #facc15;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .back-btn {
+      background-color: #facc15;
+      color: black;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 0.75rem 2rem;
+      transition: all 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #fde047;
+    }
+  </style>
+{% endblock %}
+
+{% block header %}30-Day Diet Plan{% endblock %}
+
+{% block content %}
+
+  <!-- Main Content -->
+  <main >
+    <section class="text-center mb-10">
+      <h1 class="text-4xl font-extrabold text-yellow-400 mb-4">Day 12 Meal Plan</h1>
+      <p class="text-yellow-300 text-lg mb-6">Total: 1,502 calories (adjustable to 2,000)</p>
+    </section>
+
+    <div class="max-w-3xl mx-auto space-y-6">
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Breakfast (328 calories)</h2>
+        <p style="color: white;">1 protein bar, 1 cup low-fat plain Greek yogurt<br>1 medium peach, sliced , bread<br>2 Tbsp. chopped walnuts</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Morning Snack (64 calories)</h2>
+        <p style="color: white;">1 cup raspberries</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Lunch (364 calories)</h2>
+        <p style="color: white;">1 serving Spicy Slaw Bowls with Shrimp & Edamame</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Afternoon Snack (237 calories)</h2>
+        <p style="color: white;">1 plum<br>¼ cup unsalted dry-roasted almonds</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Dinner (518 calories)</h2>
+        <p style="color: white;">1 serving One-Pot Chicken Pesto Pasta with Asparagus</p>
+        <p style="color: white;"><strong>Meal-Prep Tip:</strong> Reserve 2 servings of the One-Pot Chicken Pesto Pasta with Asparagus to have for lunch on Days 13 and 14.</p>
+      </div>
+
+      <div class="meal-box">
+        <h2 class="font-bold text-xl text-yellow-400 mb-2">Daily Totals</h2>
+        <p style="color: white;">1,502 calories, 96g protein, 117g carbohydrates, 32g fiber, 77g fat, 811mg sodium</p>
+        <p class="mt-2 text-yellow-300" style="color: white;"><strong>To make it 2,000 calories:</strong> Add ⅓ cup almonds to A.M. snack and add 1 serving Guacamole Chopped Salad to dinner.</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-10">
+      <a href="{{ url_for('diet') }}" class="back-btn">⬅ Back to 30-Day Plan</a>
+    </div>
+  </main>
+  {% endblock %}

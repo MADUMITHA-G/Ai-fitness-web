@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Q&A</title>
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  /* Custom background image */
+  background: url('/static/register.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+}
+
+header {
+  background: rgba(255, 204, 0, 0.9); /* Slight transparency */
+  color: #000;
+  text-align: center;
+  padding: 15px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 40px auto;
+  /* Transparent and blurred background */
+  background: rgba(17, 17, 17, 0.5); /* semi-transparent */
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px); /* blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+}
+
+
+  .faq-item {
+    border-bottom: 1px solid #333;
+    padding: 15px 0;
+  }
+  
+  .faq-question {
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffcc00;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-answer {
+    display: none;
+    padding-top: 10px;
+    color: #ddd;
+    line-height: 1.6;
+  }
+
+  .faq-item.active .faq-answer {
+    display: block;
+  }
+
+  .faq-item.active .faq-question::after {
+    content: "−";
+  }
+
+  .faq-question::after {
+    content: "+";
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .back-btn {
+    display: inline-block;
+    background: #ffcc00;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin: 20px;
+    font-weight: bold;
+  }
+
+  .back-btn:hover {
+    background: #fff;
+    color: #000;
+  }
+
+</style>
+</head>
+<body>
+
+<header> Fitness Coach - FAQ</header>
+
+<a href="{{ url_for('dashboard') }}" class="back-btn">⬅ Back</a>
+
+<div class="faq-container">
+<div class="faq-item">
+  <div class="faq-question">What is the best time to exercise?</div>
+  <div class="faq-answer">
+    The best time to exercise depends on your lifestyle and energy levels. 
+    Morning workouts can boost metabolism and mental focus for the day ahead. 
+    Evening workouts may improve strength and performance for some individuals. 
+    Consistency matters more than timing, so pick a schedule you can maintain. 
+    Make sure to fuel your body adequately before intense sessions. 
+    Listen to your body’s rhythm for optimal results.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How much water should I drink daily?</div>
+  <div class="faq-answer">
+    Aim to drink 2–3 liters of water daily, adjusting for activity and climate. 
+    Staying hydrated improves energy, focus, and muscle recovery. 
+    Drink small amounts regularly instead of waiting until you feel thirsty. 
+    Include hydrating foods like fruits and vegetables to complement water intake. 
+    Avoid excessive caffeinated or sugary drinks as they can dehydrate you. 
+    Proper hydration supports both workouts and daily health.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">What should I eat before a workout?</div>
+  <div class="faq-answer">
+    Eat a light, balanced meal with carbohydrates and protein 30–60 minutes before exercise. 
+    Good options include bananas with peanut butter, yogurt with fruit, or oatmeal. 
+    Avoid heavy or greasy foods that may cause stomach discomfort. 
+    Proper pre-workout nutrition provides energy and prevents fatigue. 
+    Hydrate beforehand to support endurance and focus. 
+    Adjust portions based on workout intensity and duration.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Can I work out every day?</div>
+  <div class="faq-answer">
+    Daily activity is beneficial, but muscles need rest for growth and recovery. 
+    Include at least one rest day each week or rotate between intense and light workouts. 
+    Active recovery like walking, yoga, or stretching is recommended on rest days. 
+    Overtraining can lead to fatigue, decreased performance, and injuries. 
+    Listen to your body and adjust intensity accordingly. 
+    A balanced routine ensures long-term progress and safety.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How long should my workouts be?</div>
+  <div class="faq-answer">
+    Effective workouts generally last 30–60 minutes, depending on goals and intensity. 
+    Include a proper warm-up and cool-down to reduce injury risk. 
+    High-intensity interval training may be shorter but very demanding. 
+    Longer sessions can focus on endurance, full-body conditioning, or skill work. 
+    Consistency and proper technique are more important than total duration. 
+    Adjust time to your fitness level and schedule.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How do I stay motivated to work out?</div>
+  <div class="faq-answer">
+    Set achievable, realistic goals and track your progress regularly. 
+    Find exercises or activities you genuinely enjoy. 
+    Mix up your routine to prevent boredom and plateaus. 
+    Reward yourself for milestones to stay motivated. 
+    Consider working out with a friend or joining classes for accountability. 
+    Remember that consistency is more important than intensity alone.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">What’s the best way to lose fat?</div>
+  <div class="faq-answer">
+    Combine strength training, cardiovascular exercise, and a calorie-controlled diet. 
+    Focus on creating a sustainable routine rather than quick fixes. 
+    Include whole foods, lean protein, vegetables, and healthy fats. 
+    Monitor your calorie intake and avoid extreme dieting. 
+    Regular exercise preserves muscle while burning fat. 
+    Patience and consistency lead to safe and long-lasting results.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How can I build muscle faster?</div>
+  <div class="faq-answer">
+    Focus on progressive resistance training with proper form. 
+    Increase weights gradually to challenge your muscles. 
+    Ensure adequate protein intake to support muscle growth. 
+    Allow recovery days to prevent overtraining and injuries. 
+    Combine workouts with sufficient sleep and hydration. 
+    Track progress and adjust your routine every few weeks for continued gains.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Should I do cardio or weights first?</div>
+  <div class="faq-answer">
+    The order depends on your goals: prioritize weights for strength and muscle growth. 
+    Start with cardio if improving endurance or stamina is the main goal. 
+    Warming up with light cardio before strength exercises is still recommended. 
+    Avoid over-fatiguing muscles that need to perform in your main workout. 
+    Balance both cardio and strength throughout the week for overall fitness. 
+    Listen to your body to optimize performance.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">What’s the best diet for fitness?</div>
+  <div class="faq-answer">
+    A balanced diet includes lean protein, complex carbohydrates, healthy fats, and plenty of vegetables. 
+    Limit processed foods and added sugars for better energy and recovery. 
+    Eat enough calories to support workouts and muscle maintenance. 
+    Hydrate consistently throughout the day. 
+    Consider nutrient timing around workouts for optimal performance. 
+    Consistency in diet is as important as consistency in training.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How important is sleep for fitness?</div>
+  <div class="faq-answer">
+    Sleep is essential for muscle repair, recovery, and hormone regulation. 
+    Adults should aim for 7–9 hours of quality sleep per night. 
+    Poor sleep can reduce performance, motivation, and energy. 
+    It also impacts fat loss and muscle growth. 
+    Establish a consistent sleep routine and avoid screens before bed. 
+    Combine proper rest with training for optimal results.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How often should I change my workout routine?</div>
+  <div class="faq-answer">
+    Update your routine every 6–8 weeks to avoid plateaus and maintain progress. 
+    Change exercises, intensity, or volume gradually. 
+    Include variety in movement patterns for balanced development. 
+    Monitor your progress and adjust based on performance and goals. 
+    Avoid making drastic changes too quickly. 
+    Consistency with gradual progression ensures continuous improvement.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Do I need supplements?</div>
+  <div class="faq-answer">
+    Supplements are optional and depend on your diet and goals. 
+    Focus on whole, nutrient-rich foods first. 
+    Protein powders, vitamins, or creatine can help fill gaps when necessary. 
+    Avoid relying solely on supplements for fitness progress. 
+    Always read labels and choose reputable products. 
+    Consult a professional if unsure about supplementation.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">What is BMI?</div>
+  <div class="faq-answer">
+    BMI (Body Mass Index) is a calculation based on height and weight to estimate body fat. 
+    It is a general guideline and does not consider muscle mass. 
+    Use BMI alongside measurements, body composition, and fitness levels. 
+    It helps identify potential health risks when very high or low. 
+    Focus on overall health rather than just the number. 
+    Consult professionals for personalized assessment.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Is yoga a good workout?</div>
+  <div class="faq-answer">
+    Yoga improves flexibility, balance, strength, and mental focus. 
+    It can complement strength or cardio routines effectively. 
+    Regular practice reduces stress and promotes recovery. 
+    Yoga can be adapted to beginners or advanced levels. 
+    Include it as part of a balanced fitness plan. 
+    It enhances both physical and mental well-being.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How do I track my progress?</div>
+  <div class="faq-answer">
+    Track progress using measurements, photos, or workout logs instead of relying solely on the scale. 
+    Use fitness apps or journals to record weight, strength, or endurance gains. 
+    Track both short-term and long-term goals. 
+    Review your progress regularly to adjust workouts and diet. 
+    Celebrate small milestones to stay motivated. 
+    Consistency in tracking supports better results.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Can I lose weight without exercise?</div>
+  <div class="faq-answer">
+    Yes, creating a calorie deficit through diet alone can reduce weight. 
+    However, combining exercise helps preserve muscle and boost metabolism. 
+    Strength training is particularly important to maintain lean mass. 
+    Cardio can increase calorie expenditure and improve cardiovascular health. 
+    Focus on sustainable habits rather than extreme diets. 
+    Long-term results are more achievable with a combination of diet and activity.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How do I avoid injuries?</div>
+  <div class="faq-answer">
+    Warm up properly before every workout to prepare muscles and joints. 
+    Use correct form and start with manageable weights or intensity. 
+    Gradually progress to avoid strain or overuse injuries. 
+    Include stretching, mobility, and rest days in your routine. 
+    Listen to your body and address aches promptly. 
+    Proper preparation reduces the risk of long-term setbacks.
+  </div>
+</div>
+<div class="faq-item">
+  <div class="faq-question">What’s a good post-workout meal?</div>
+  <div class="faq-answer">
+    Consume a meal with protein and carbohydrates within an hour after training. 
+    Examples: grilled chicken with rice, protein smoothie, or eggs with toast. 
+    Proper nutrition aids muscle repair and replenishes energy stores. 
+    Hydrate well to replace fluids lost during exercise. 
+    Include vegetables or fruits for vitamins and minerals. 
+    Balanced post-workout meals improve recovery and performance.
+  </div>
+</div>
+<div class="faq-item">
+  <div class="faq-question">Should I work out when I’m sore?</div>
+  <div class="faq-answer">
+    Light activity is okay, but avoid training the same muscles intensely until soreness decreases. 
+    Active recovery like walking, cycling, or gentle stretching can help reduce stiffness. 
+    Listen to your body to prevent injuries or overtraining. 
+    Muscle soreness is a natural response to exercise, especially when introducing new movements. 
+    Proper hydration, nutrition, and sleep aid recovery. 
+    Adjust intensity rather than skipping movement entirely.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">Is stretching important?</div>
+  <div class="faq-answer">
+    Stretching improves flexibility, range of motion, and injury prevention. 
+    Incorporate dynamic stretches before workouts and static stretches after sessions. 
+    Regular stretching supports posture, reduces muscle tension, and enhances recovery. 
+    It can also improve performance in strength and endurance activities. 
+    Include stretches targeting all major muscle groups. 
+    Consistency is key for long-term flexibility benefits.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How do I improve endurance?</div>
+  <div class="faq-answer">
+    Improve endurance by progressively increasing the duration and intensity of cardio exercises. 
+    Mix steady-state cardio with interval training for better results. 
+    Include strength training to support muscles and prevent fatigue. 
+    Ensure proper nutrition, focusing on carbohydrates for energy. 
+    Adequate rest and recovery are crucial to avoid overtraining. 
+    Track performance over time to measure improvements.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">What’s a good beginner workout plan?</div>
+  <div class="faq-answer">
+    Start with full-body workouts 3 days per week, combining strength, cardio, and mobility exercises. 
+    Focus on learning proper form and technique rather than heavy weights. 
+    Include exercises like squats, push-ups, lunges, and planks. 
+    Allow rest days between sessions for recovery and adaptation. 
+    Gradually increase intensity, duration, or weights over time. 
+    Track progress and celebrate small milestones for motivation.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How can I gain healthy weight?</div>
+  <div class="faq-answer">
+    Focus on a calorie surplus with nutrient-dense foods, not junk food. 
+    Include lean protein, whole grains, healthy fats, and plenty of vegetables. 
+    Strength training is essential to convert extra calories into muscle rather than fat. 
+    Eat frequent meals and snacks throughout the day. 
+    Track progress and adjust caloric intake gradually. 
+    Adequate sleep and hydration also support healthy weight gain.
+  </div>
+</div>
+
+<div class="faq-item">
+  <div class="faq-question">How do I stay consistent?</div>
+  <div class="faq-answer">
+    Create a realistic workout schedule and stick to it like an appointment. 
+    Set both short-term and long-term goals to maintain motivation. 
+    Track your workouts and nutrition to see progress over time. 
+    Reward yourself for achievements to stay motivated. 
+    Find an activity you enjoy, so it doesn’t feel like a chore. 
+    Remember, consistency outweighs intensity for long-term results.
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    item.addEventListener('click', () => {
+      faqItems.forEach(i => i.classList.remove('active'));
+      item.classList.toggle('active');
+    });
+  });
+</script>
+
+</body>
+</html>

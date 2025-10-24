@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MediaPipe Face Landmarker Live Demo</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            position: relative;
+            width: 640px; /* Set a fixed size for the container */
+            height: 480px;
+            border: 5px solid #00c7e2;
+            box-shadow: 0 0 20px rgba(0, 199, 226, 0.7);
+        }
+        #videoElement, #canvasOutput {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Flip horizontally for a mirror effect common in webcam apps */
+            transform: scaleX(-1); 
+        }
+        #videoElement {
+            opacity: 0; /* Hide the video element, only use it as a source */
+        }
+        #status {
+            margin: 15px 0;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <h1>MediaPipe Face Landmarker Live</h1>
+    <p id="status">Loading MediaPipe Libraries and Model...</p>
+
+    <div class="container">
+        <video id="videoElement" autoplay playsinline></video>
+        <canvas id="canvasOutput"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/vision_bundle.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        // --- Global Variables ---
+        const statusElement = document.getElementById('status');
+        const video = document.getElementById('videoElement');
+        const canvas = document.getElementById('canvasOutput');
+        const canvasCtx = canvas.getContext('2d');
+        
+        let faceLandmarker;
+        let runningMode = "VIDEO";
+        let lastVideoTime = -1;
+        let cameraStream;
+
+        // --- Model and Utility Constants ---
+        const modelUrl = 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker_v2_with_blendshapes/float16/1/face_landmarker_v2_with_blendshapes.task';
+        const drawingUtils = new DrawingUtils(canvasCtx);
+        const { FaceLandmarker, FilesetResolver, DrawingUtils } = self.globalThis.MediaPipeTasksVision;
+
+        // 1. Initialize Face Landmarker and start camera
+        async function initializeModel() {
+            try {
+                // Get the necessary library parts
+                const filesetResolver = await FilesetResolver.forVisionTasks(
+                    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
+                );
+
+                // Create the FaceLandmarker instance
+                faceLandmarker = await FaceLandmarker.create(filesetResolver, {
+                    baseOptions: {
+                        modelAssetPath: modelUrl,
+                        delegate: "GPU" // Use GPU if available for best performance
+                    },
+                    runningMode: "LIVE_STREAM",
+                    numFaces: 1,
+                    outputFaceBlendshapes: true,
+                    resultListener: processResults // Set the asynchronous callback function
+                });
+
+                statusElement.innerHTML = 'Model loaded. Starting camera...';
+                startCamera();
+
+            } catch (error) {
+                console.error("Error initializing MediaPipe:", error);
+                statusElement.innerHTML = `Error loading model: ${error.message}`;
+            }
+        }
+
+        // 2. Setup Camera Access
+        function startCamera() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                statusElement.innerHTML = 'Camera API not supported in this browser.';
+                return;
+            }
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    cameraStream = stream;
+                    video.srcObject = stream;
+                    video.onloadedmetadata = () => {
+                        video.play();
+                        // Set canvas dimensions to match the video feed
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        
+                        statusElement.innerHTML = 'Camera Ready! Detecting landmarks...';
+                        requestAnimationFrame(predictWebcam); // Start the detection loop
+                    };
+                })
+                .catch((err) => {
+                    console.error("Error accessing camera:", err);
+                    statusElement.innerHTML = `Error accessing camera: ${err.name}. Please grant permissions.`;
+                });
+        }
+
+        // 3. Main Loop for Detection
+        function predictWebcam() {
+            if (!faceLandmarker) return;
+
+            // Check if video is playing and ready
+            if (video.currentTime !== lastVideoTime) {
+                lastVideoTime = video.currentTime;
+                // Send the video frame to the Face Landmarker
+                faceLandmarker.detectForVideo(video, performance.now(), processResults);
+            }
+
+            // Loop continuously
+            requestAnimationFrame(predictWebcam);
+        }
+
+        // 4. Asynchronous Result Callback
+        function processResults(result) {
+            // Clear the canvas from the previous frame
+            canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw the current video frame onto the canvas (flipped to match real-time view)
+            canvasCtx.save();
+            canvasCtx.scale(-1, 1);
+            canvasCtx.drawImage(video, 0, 0, canvas.width * -1, canvas.height);
+            canvasCtx.restore();
+
+            // Check if any faces were detected
+            if (result.faceLandmarks.length > 0) {
+                // Iterate over all detected faces
+                for (const landmarks of result.faceLandmarks) {
+                    
+                    // Draw the mesh/tessellation (the full 478 points)
+                    drawingUtils.drawConnectors(
+                        landmarks, 
+                        FaceLandmarker.FACE_LANDMARKS_TESSELATION, 
+                        { color: "#C0C0C070", lineWidth: 1 } // Light gray, thin
+                    );
+
+                    // Draw the key contours (eyes, lips, etc.) for a clearer outline
+                    drawingUtils.drawConnectors(
+                        landmarks, 
+                        FaceLandmarker.FACE_LANDMARKS_CONTOURS, 
+                        { color: "#FF0000", lineWidth: 2 } // Red
+                    );
+                    
+                    // Optionally, draw the iris landmarks
+                    drawingUtils.drawConnectors(
+                        landmarks, 
+                        FaceLandmarker.FACE_LANDMARKS_LEFT_EYE, 
+                        { color: "#30FF30", lineWidth: 1 } // Green
+                    );
+                    drawingUtils.drawConnectors(
+                        landmarks, 
+                        FaceLandmarker.FACE_LANDMARKS_RIGHT_EYE, 
+                        { color: "#30FF30", lineWidth: 1 } // Green
+                    );
+                }
+            }
+        }
+        
+        // --- Start the whole process when the script runs ---
+        initializeModel();
+
+    </script>
+</body>
+</html>

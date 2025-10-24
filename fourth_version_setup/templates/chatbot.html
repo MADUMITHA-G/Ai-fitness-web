@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}Chatbot - AI Fitness Coach{% endblock %}
+{% block header %}Chatbot{% endblock %}
+{% block content %}
+<div class="max-w-3xl w-full mx-auto bg-black/60 rounded-xl p-10">
+  <h2 class="text-2xl font-semibold text-yellow-300 mb-4">FitBot</h2>
+  <div id="chat-window" class="min-h-[32rem] h-96 overflow-y-auto bg-black/40 rounded p-4 text-gray-200 mb-1 flex flex-col gap-2">
+    <div class="flex items-start"><div class="bg-gray-800 text-gray-300 p-3 rounded-xl rounded-tl-sm max-w-lg">Bot: Hi! I'm FitBot, your AI fitness trainer. Ask me anything about workouts or nutrition!</div></div>
+  </div>
+  <form class="mt-4 flex gap-3" id="chat-form" autocomplete="off">
+    <input id="message" class="flex-1 px-4 py-3 rounded bg-white/10 text-gray-100" placeholder="Type a message" />
+    <button class="px-6 py-3 bg-yellow-400 text-black font-semibold rounded" type="submit">Send</button>
+  </form>
+</div>
+<!-- Load Marked.js (Markdown parser) via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+const form = document.getElementById('chat-form');
+const input = document.getElementById('message');
+const chat = document.getElementById('chat-window');
+
+form.onsubmit = async function(event) {
+  event.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
+  addMessage('You', text, false);
+  input.value = '';
+  input.disabled = true;
+  showTyping();
+  try {
+    const res = await fetch('/chatbot_api', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text })
+    });
+    const data = await res.json();
+    removeTyping();
+    if (data.error) {
+      addMessage('Bot', 'Sorry, something went wrong.', true);
+      return;
+    }
+    if(data.text) addMessage('Bot', data.text, true);
+    if(Array.isArray(data.images)) {
+      data.images.forEach(imgData => addImage(imgData));
+    }
+  } catch (err) {
+    removeTyping();
+    addMessage('Bot', 'Network error. Try again.', true);
+  }
+  input.disabled = false;
+  input.focus();
+}
+
+function addMessage(who, text, isBot) {
+  const wrapper = document.createElement('div');
+  wrapper.className = (isBot ? 'flex items-start' : 'flex items-start justify-end');
+
+  const div = document.createElement('div');
+  div.className = (isBot ?
+    'bg-gray-800 text-yellow-200 p-3 rounded-xl rounded-tl-sm max-w-lg shadow mb-1'
+    :
+    'bg-yellow-400 text-black p-3 rounded-xl rounded-tr-sm max-w-lg shadow mb-1 font-semibold text-right'
+  );
+  if (isBot) {
+    div.innerHTML =  marked.parse(text);
+  } else {
+    div.innerHTML =  marked.parse(text.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+  }
+  wrapper.appendChild(div);
+  chat.appendChild(wrapper);
+  chat.scrollTop = chat.scrollHeight;
+}
+function addImage(dataUrl) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'flex items-center';
+  const img = document.createElement('img');
+  img.className = 'my-2 rounded border border-yellow-400 max-w-xs';
+  img.src = dataUrl;
+  wrapper.appendChild(img);
+  chat.appendChild(wrapper);
+  chat.scrollTop = chat.scrollHeight;
+}
+function showTyping() {
+  removeTyping();
+  const loadWrapper = document.createElement('div');
+  loadWrapper.className = 'flex items-start';
+  loadWrapper.id = 'bot-typing';
+  const load = document.createElement('div');
+  load.className = 'text-yellow-300 italic bg-gray-700 p-2 rounded max-w-md';
+  load.textContent = 'Bot is typing...';
+  loadWrapper.appendChild(load);
+  chat.appendChild(loadWrapper);
+  chat.scrollTop = chat.scrollHeight;
+}
+function removeTyping() {
+  const load = document.getElementById('bot-typing');
+  if(load) load.parentNode.removeChild(load);
+}
+</script>
+{% endblock %}
+
+

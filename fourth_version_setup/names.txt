@@ -1,0 +1,4 @@
+profile.html - dashboard of the user
+home.html - landing page - entry page
+dashboard.html - current exercise list page
+home2.html - old landing page
